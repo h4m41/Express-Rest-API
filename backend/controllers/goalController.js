@@ -26,6 +26,12 @@ const updateGoal= asyncHandler (async  (req,res) => {
         throw new Error('goal not found')
 
     }
+    const userExists = await User.findOne({email})
+
+if(userExists){
+    res.status(400)
+    throw new Error('user already exists')
+}
 
     const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body,{new: true})
 
